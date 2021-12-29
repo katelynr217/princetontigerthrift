@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<link rel="shortcut icon" type="image/" href="/static/images/icon.png"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<html>
+    <head>
+        <title>TigerThrift</title>
+    </head>
+  <body>
+    {% include 'header.html' %}
+    <div class="container-fluid">
+        <div class="row text-center">
+            <h3 class="text-left mt-3"><strong>{{user_info['full_name']}}</strong></h3>
+            <p class="text-left mb-0" style="text-transform:lowercase" id="faculty">{{user_info['netid']}} | {{user_info['class_year']}}</p>
+            <p class="text-left mb-0" style="text-transform:lowercase" id="undergrad">{{user_info['netid']}} | class of 20{{user_info['class_year']}}</p>
+            <p class="text-left mb-2" style="text-transform:lowercase">{{user_info['email']}}</p>
+            <p class="text-left mb-2" style="text-transform:lowercase" id="with_phone">phone: {{user_info['phone']}}</p>
+            <!-- <button id="edit_button" class="card-text btn btn-dark btn-sm">edit phone number</button>
+
+            <div hidden id="edit_profile">
+                <form action="/profile" method="POST" class="pt-2">
+                    Phone Number:
+                    <input id="submit_phone" name="phone" value="" type="text">
+                    <button type="submit" id="submit_edits" class="card-text btn btn-dark btn-sm">confirm</button>
+                </form>
+            </div>           -->
+        </div>                        
+    </div>
+</body>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+    <script>
+        function setup(){
+            document.getElementById("shop_header").style.color = "#000000";
+            document.getElementById("sell_header").style.color = "#000000";
+            document.getElementById("profile_header").style.color = "#2B6FF4";
+            document.getElementById("about_header").style.color = "#000000";
+            document.getElementById("tutorial_header").style.color = "#000000";
+
+            if ("{{user_info['phone']}}" != "unknown") {
+                $("#with_phone").show();
+                $("#without_phone").hide();
+                $("#submit_phone").val("{{user_info['phone']}}");
+
+            }
+            else {
+                $("#with_phone").hide();
+                $("#without_phone").show();
+            }
+
+            if ("{{user_info['class_year']}}" == "faculty") {
+                $("#faculty").show();
+                $("#undergrad").hide();
+            }
+            else {
+                $("#faculty").hide();
+                $("#undergrad").show();
+            }
+
+            $('#edit_button').click(function(){
+                $('#edit_profile').attr("hidden", false);
+            })
+
+        }
+        $('#document').ready(setup);
+    </script>
+</html>

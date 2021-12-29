@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<link rel="shortcut icon" type="image/" href="/static/images/icon.png"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<html>
+    <head>
+        <title>TigerThrift</title>
+    </head>
+  <body>
+    {% include 'header.html' %}
+    <div class="container-fluid">
+        <div class="row text-center">
+            <h3 class="text-left mt-3"><strong>{{user_info['full_name']}}</strong></h3>
+            <p class="text-left mb-0" style="text-transform:lowercase" id="faculty">{{user_info['netid']}} | {{user_info['class_year']}}</p>
+            <p class="text-left mb-0" style="text-transform:lowercase" id="undergrad">{{user_info['netid']}} | class of 20{{user_info['class_year']}}</p>
+            <p class="text-left mb-2" style="text-transform:lowercase">{{user_info['email']}}</p>
+            <p class="text-left mb-2" style="text-transform:lowercase" id="with_phone">phone: {{user_info['phone']}}</p>
+        </div>
+
+        <div id="active_row"
+        style="padding-left: min(50px, 10%); padding-right: min(50px, 10%); padding-bottom: min(80px, 10%);" class="m-auto">
+            <div class="row px-2" id="sidebar">
+                <a href="/myselling/reserved" id="items_curr_reserved_button" class="col text-center rounded-top" style="padding: 10px;">
+                    reserved by others
+                </a>
+                <a href="/myselling/active" id="items_curr_active_button" class="col text-center rounded-top" style="padding: 10px;">
+                    still active
+                </a>
+            </div>
+            <br>
+            <div id="items_curr_reserved">
+                <h4 class="text-center" style="margin: 0;">Items Currently Reserved By Others</h4>
+                <div id=search_results class="card-deck row justify-content-center">
+                    {% if reserved_by_others|length == 0 %}
+                    <h5 class="text-center pt-3">No items have yet been reserved!</h5>
+                    {% else %}
+                    {% for item in reserved_by_others %}
+                        <!-- item is currently reserved -->
+                        {% if item['status'] == 1 %} 
+                            <div class="card" style="width:250px; margin:30px;">
+                                <img class="card-img-top pt-2" src="{{item['photolink']}}" alt="item photo" style="width:220px; height:220px; overflow:hidden; object-fit:contain;">
+                                <div class="card-body pb-3">
+                                    <h4 class="card-title" style="height: 80px;">{{item['prodname']}}</h4>
+                                    <div class="d-flex align-self-end row">
+                                        <p class="card-text">Buyer: {{item['buyer_full_name']}} ({{item['buyernetid']}})</p>
+                                        {% if item['reservation_time_left'] == "YOUR RESERVATION HAS EXPIRED! 0 days left" %}
+                                        <p class="card-text" id=time_left style="color: black;" style="height: 150px;"><i style="color: red;"><strong>YOUR RESERVATION HAS EXPIRED!</strong></i><br>Please contact the buyer and complete the sale, or let us know if the buyer is inactive.</p>
+                                        {% elif "YOUR RESERVATION WILL EXPIRE IN" in item['reservation_time_left'] %}
+                                        <p class="card-text" id=time_left style="color: black;" style="height: 150px;"><i style="color: red;">{{item['reservation_time_left']}}</i><br>Please contact the buyer and complete the sale, or let us know if the buyer is inactive.</p>
+                                        {% else %}
+                                        <p class="card-text" style="height: 150px;"><i>{{item['reservation_time_left']}} to complete reservation</i></p>
+                                        {% endif %}
+                                        <form action="/itemdetails" method='GET'>
+                                            <input type = "hidden" name="itemid" value="{{item['itemid']}}">
+                                            <button type="submit" class="card-text btn btn-sm btn-dark px-4">details</button>
+                                        </form>
+                                        <form action="/completesale" onSubmit="return confirm('Confirm sale completion. Has the buyer received their item and have you received payment?');" method='POST' class="pt-2">
+                                            <input type = "hidden" name="itemid" value="{{item['itemid']}}">
+                                            <button class="card-text btn btn-sm btn-dark px-4"><p style="color:white" class="m-0">complete sale <span style="color: #85c285;">✓</span></p></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+    <script>
+        function setup() {
+
+            document.getElementById("shop_header").style.color = "#000000";
+            document.getElementById("sell_header").style.color = "#000000";
+            document.getElementById("profile_header").style.color = "#2B6FF4";
+            document.getElementById("about_header").style.color = "#000000";
+            document.getElementById("tutorial_header").style.color = "#000000";
+            document.getElementById("items_curr_reserved_button").style.color = "#2B6FF4";
+
+            document.getElementById("items_curr_reserved_button").style.color = "#2B6FF4";
+            document.getElementById("items_curr_reserved_button").style.border = "2px solid #2B6FF4";
+            document.getElementById("items_curr_reserved_button").style.borderBottom = "2px solid #ffffff";
+            document.getElementById("items_curr_active_button").style.color = "#000000";
+            document.getElementById("items_curr_active_button").style.border = "2px solid #ffffff";
+            document.getElementById("items_curr_active_button").style.borderBottom = "2px solid #2B6FF4";
+
+            if ("{{user_info['phone']}}" != "unknown") {
+                $("#with_phone").show();
+                $("#without_phone").hide();
+            }
+            else {
+                $("#with_phone").hide();
+                $("#without_phone").show();
+            }
+            if ("{{user_info['class_year']}}" == "faculty") {
+                $("#faculty").show();
+                $("#undergrad").hide();
+            }
+            else {
+                $("#faculty").hide();
+                $("#undergrad").show();
+            }
+        }
+
+        $('#document').ready(setup);
+    </script>
+    </html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<link rel="shortcut icon" type="image/" href="/static/images/icon.png"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<html>
+    <head>
+        <title>TigerThrift</title>
+    </head>
+  <body>
+    <!--header-->
+      <nav class="navbar navbar-expand-sm navbar-light bg-white pb-0 pt-3" id="logged_out_navbar">
+        <div class="container-fluid" id="style_header">
+          <div class="d-flex flex-wrap p-0">
+            <a href="/" style="text-decoration:none; color: black;"><h1><strong>TigerThrift</strong></h1></a>
+            <a href="/"><img src="/static/images/icon.png" class="img-fluid align-middle ps-2"
+              style="max-height: 38px; max-width: 38px;"></a>
+          </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <div class="navbar-nav">
+              <h5><a class="nav-item nav-link" href="about">About</a></h5>
+              <h5><a class="nav-item nav-link" href="tutorial">Tutorial</a></h5>
+              <h5><a class="nav-item nav-link link-secondary" href="login">Log In</a></h5>
+            </div>
+          </div>
+        </div>
+      </nav>
+    <!--after header-->
+    {% include 'header.html' %}
+    <br>
+    <div class="container-fluid px-5 pb-5">
+        <h3 class="text-center pb-3  mt-3"><strong>How to Use TigerThrift!</strong></h3>
+        <div class="row px-2" id="sidebar">
+            <a id="buy_tutorial_button" class="col text-center rounded-top" style="min-width: 100px; padding: 10px;">
+                Purchase an Item
+            </a>
+            <a id="sell_tutorial_button" class="col text-center rounded-top" style="min-width: 100px; padding: 10px;">
+                Sell an Item
+            </a>
+        </div>
+        <div style="max-width: 750px; padding-left: min(50px, 10%); padding-right: min(50px, 10%);" class="m-auto" id="buy_tutorial">
+            <!--<h4 class="text-center pt-3">how to purchase an item</h4>-->
+            <ol type = "1" class="pt-3">
+                <li>Go to the <a href="shop">shop page</a>.</li>
+                <li>Browse through available items. You can narrow down your search by using the search bar or filtering based on the specified fields!</li>
+                <li>Click on the <strong>details</strong> button if you want to learn more about an item.</li>
+                <li>If you are interested in purchasing an item, click the 'reserve' button which will hold the item for you and notify the seller. You should also receive a reservation confirmation email.
+                <li>You should see this reservation reflected in the 'My Reservations' tab on your profile, where you can also cancel your reservation at any time.</li>
+                <li>You and the seller have <strong>72 hours</strong> to complete the sale. You can view the time left to complete your reservation in the 'My Reservations' tab on your profile. You will also receive reminders via email.</li>
+                <li>Wait for the seller to reach out to you to coordinate the completion of the transaction, or reach out to the seller using the contact info sent to you in a reservation confirmation email.</li>
+                <li>You and the seller should <strong>schedule a time to meet so that </strong>the seller can deliver the item to you and you can pay them. The seller will then close out the sale on their end.</li>
+            </ol>
+            <div class="text-center">
+                <form action="shop" method='GET'>
+                    <button class="card-text btn btn-dark">Browse Items!</button>
+                </form>
+            </div>
+        </div>
+        <div style="max-width: 750px; padding-left: min(50px, 10%); padding-right: min(50px, 10%);" class="m-auto" id="sell_tutorial">
+            <!--<h4 class="text-center pt-3">how to sell an item</h4>-->
+            <ol type = "1" class="pt-3">
+                <li>Go to the <a href="sell">sell page</a>.</li>
+                <li>Fill out the form with all the required item details. You can upload <strong>up to 4 photos!</strong> Your phone number is optional and can be used for potential buyers to contact you to coordinate a time to complete the purchase.</li>
+                <li>Clicking 'Create Item!' will list the item on the <a href="shop">shop page</a>.</li>
+                <li><strong>If a potential buyer reserves your item</strong>, you will be notified by us via an email containing the buyer's contact infomation. The reservation will also show up on the "Selling" tab of your profile.</li>
+                <li>You are responsible to <strong>contact the buyer</strong> via email or phone (if available) within 72 hours from the time the email was sent. The time left to complete the sale is reflected on the "Selling" tab of your profile.</li>
+                <li> <strong>Schedule a time to meet up with the buyer</strong> to deliver the item to them and for them to pay you.</li>
+                <li><strong>Click the 'complete sale' button</strong> on the "Selling" tab of your profile after completing and closing out the transaction! If the buyer decides not to purchase the item, they must cancel the reservation on their end.</li>
+            </ol>
+            <div class="text-center">
+                <form action="sell" method='GET'>
+                    <button class="card-text btn btn-dark">Sell an Item!</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            document.getElementById("shop_header").style.color = "#000000";
+            document.getElementById("sell_header").style.color = "#000000";
+            document.getElementById("profile_header").style.color = "#000000";
+            document.getElementById("about_header").style.color = "#000000";
+            document.getElementById("tutorial_header").style.color = "#2B6FF4";
+            
+            function hideAll() {
+                $("#buy_tutorial").hide();
+                $("#sell_tutorial").hide();
+            }
+            function setup(){
+                $("#sell_tutorial").hide();
+                $("#buy_tutorial").show();
+
+                if ("{{logged_in}}" == "False") {
+                    $("#logged_out_navbar").show();
+                    $("#logged_in_navbar").hide();
+                }
+                else {
+                    $("#logged_out_navbar").hide();
+                    $("#logged_in_navbar").show();
+                }
+                document.getElementById("buy_tutorial_button").style.color = "#2B6FF4";
+                document.getElementById("buy_tutorial_button").style.border = "2px solid #2B6FF4";
+                document.getElementById("buy_tutorial_button").style.borderBottom = "2px solid #ffffff";
+                document.getElementById("sell_tutorial_button").style.color = "#000000";
+                document.getElementById("sell_tutorial_button").style.border = "2px solid #ffffff";
+                document.getElementById("sell_tutorial_button").style.borderBottom = "2px solid #2B6FF4";
+
+                $("#buy_tutorial_button").click(function(){
+                    hideAll();
+                    document.getElementById("buy_tutorial_button").style.color = "#2B6FF4";
+                    document.getElementById("buy_tutorial_button").style.border = "2px solid #2B6FF4";
+                    document.getElementById("buy_tutorial_button").style.borderBottom = "2px solid #ffffff";
+                    document.getElementById("sell_tutorial_button").style.color = "#000000";
+                    document.getElementById("sell_tutorial_button").style.border = "2px solid #ffffff";
+                    document.getElementById("sell_tutorial_button").style.borderBottom = "2px solid #2B6FF4";
+                    $("#buy_tutorial").show();
+                });
+
+                $("#sell_tutorial_button").click(function(){
+                    hideAll();
+                    document.getElementById("sell_tutorial_button").style.color = "#2B6FF4";
+                    document.getElementById("sell_tutorial_button").style.border = "2px solid #2B6FF4";
+                    document.getElementById("sell_tutorial_button").style.borderBottom = "2px solid #ffffff";
+                    document.getElementById("buy_tutorial_button").style.color = "#000000";
+                    document.getElementById("buy_tutorial_button").style.border = "2px solid #ffffff";
+                    document.getElementById("buy_tutorial_button").style.borderBottom = "2px solid #2B6FF4";
+                    $("#sell_tutorial").show();
+                });
+            }
+
+            $('#document').ready(setup);
+        </script>
+</html>

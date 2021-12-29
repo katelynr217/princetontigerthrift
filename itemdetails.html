@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<link rel="shortcut icon" type="image/" href="/static/images/icon.png"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<html>
+    <head>
+        <title>TigerThrift</title>
+    </head>
+  <body>
+    {% include 'header.html' %}
+    <div style="padding-left: min(50px, 10%);" id="back_form">
+      <form action="{{route}}" method='GET'>
+        <button type="submit" id="back_button" 
+          class="btn btn-white rounded-0" style="font-weight: 600; letter-spacing: 0.1em;">← go back</button>
+      </form>
+    </div>
+    <div style="padding-left: min(50px, 10%);" id="shop_form">
+        <form action="/shop" method='GET'>
+            <input id="prev_search" type = "hidden" name="search" value="{{prev_search}}">
+            <input type = "hidden" name="gender" value="{{ prev_filter['gender'] }}">
+            <input type = "hidden" name="type" value="{{ prev_filter['type'] }}">
+            <input type = "hidden" name="subtype" value="{{ prev_filter['subtype'] }}">
+            <input type = "hidden" name="size" value="{{ prev_filter['size'] }}">
+            <input type = "hidden" name="condition" value="{{ prev_filter['condition'] }}">
+            <input type = "hidden" name="color" value="{{ prev_filter['color'] }}">
+            <input type = "hidden" name="brand" value="{{ prev_filter['brand'] }}">
+            <input type = "hidden" name="sort" value="{{ prev_sort }}">
+            <button type="submit" class="btn btn-white rounded-0" style="font-weight: 600; letter-spacing: 0.1em;">← go back</button>
+        </form>
+    </div>
+      <div class="m-auto row" style="max-width: 750px; padding-left: min(50px, 10%); padding-right: min(50px, 10%);">
+        <div class="col" style="min-width: 250px;">
+          <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              {% if item['photolink1'] != '' %}
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              {% endif %}
+              {% if item['photolink2'] != '' %}
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              {% endif %}
+              {% if item['photolink3'] != '' %}
+              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+              {% endif %}
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="{{item['photolink']}}" alt="First Photo" class="d-block w-100" style="width:220px; height:400px; overflow:hidden; object-fit:contain;"><!--style="width:400px; height:400px; overflow:hidden; object-fit:contain;"-->
+              </div>
+              {% if item['photolink1'] != '' %}
+              <div class="carousel-item">
+                <img src="{{item['photolink1']}}" alt="Second Photo" class="d-block w-100" style="width:220px; height:400px; overflow:hidden; object-fit:contain;">
+              </div>
+              {% endif %}
+              {% if item['photolink2'] != '' %}
+              <div class="carousel-item">
+                <img src="{{item['photolink2']}}" alt="Third Photo" class="d-block w-100" style="width:220px; height:400px; overflow:hidden; object-fit:contain;">
+              </div>
+              {% endif %}
+              {% if item['photolink3'] != '' %}
+              <div class="carousel-item">
+                <img src="{{item['photolink3']}}" alt="Fourth Photo" class="d-block w-100" style="width:220px; height:400px; overflow:hidden; object-fit:contain;">
+              </div>
+              {% endif %}
+            </div>
+            {% if item['photolink1'] != '' %}
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+            {% endif %}
+          </div>
+          </div>
+        <div class="col" style="min-width: 250px;">
+          <h3><strong style="letter-spacing: 0.2em; word-wrap:break-word; font-weight: 600;">{{ item['prodname']}}</strong></h3>
+
+          <h4><strong style="letter-spacing: 0.1em; font-weight: 500;">{{ item['price']}} </strong><span style="font-size: smaller;">({{ item['priceflexibility']}})</span></h4>
+          <p style="letter-spacing: 0.1em; font-weight: 400;"><strong style="font-weight: 600;">Size:</strong> {{ item['size'] }} <br>
+           <strong style="font-weight: 600;">Brand:</strong> {{item['brand'] }}</p>
+          <!-- only show reserve button if item is active status (not reserved, and still available) -->
+          {% if item['status'] == 0 and user_info['netid'] != item['sellernetid'] %}
+          <div class="text-center pt-2">
+            <form action="reserve" onSubmit="return confirm('Confirm reservation of ' + `{{item['prodname']}}` + '?')" method='POST'>
+              <input type="hidden" name="itemid" value="{{item['itemid']}}">
+              <button type="submit" class="btn btn-dark mt-2 w-100" style="letter-spacing: 0.1em;">reserve</button>
+            </form>
+          </div>
+          {% endif %}
+          {% if item['status'] == 0 and user_info['netid'] == item['sellernetid'] %}
+          <div class="text-center pt-2">
+            <form action="/edit" method="POST">
+              <input type="hidden" name="itemid" value="{{item['itemid']}}">
+              <button type="submit" id="edit_button"class="btn btn-dark mt-2 w-100" style="letter-spacing: 0.1em;">Edit</button>
+            </form>
+          </div>
+          <div class="text-center pt-2">
+            <form action="/deletesuccess" onSubmit="return confirm('Are you sure you want to delete this item?');" method="POST">
+              <input type="hidden" name="itemid" value="{{item['itemid']}}">
+              <button type="submit" id="delete_button" class="btn btn-dark mt-2 w-100" style="letter-spacing: 0.1em;">Delete <i style="color: #f28b88;" class="fa fa-trash-o"></i></button>
+            </form>
+          </div>
+          {% endif %}
+          {% if item['status'] == 1 and user_info['netid'] == item['sellernetid'] %}
+          <div class="text-center pt-2">
+            <form action="/completesale" onSubmit="return confirm('Confirm sale completion. Has the buyer received their item and have you received payment?');" method='POST'>
+                <input type = "hidden" name="itemid" value="{{item['itemid']}}">
+                <button class="btn btn-dark mt-2 w-100"><p style="color:white; letter-spacing: 0.1em;" class="m-0">Complete Sale <span style="color: #85c285;">✓</span></p></button>
+            </form>
+          </div>
+          {% endif %}
+          {% if item['status'] == 1 and isMine == True %}
+          <div class="text-center pt-2">
+            <form id="cancel_form" action="cancelsuccess" onSubmit="return confirm('Are you sure you want to cancel your reservation?');"  method='POST'>
+                <input type = "hidden" name="itemid" value="{{item['itemid']}}">
+                <button type="submit" class="btn btn-dark mt-2 w-100"><p style="color:white; letter-spacing: 0.1em;" class="m-0">Cancel Reservation <span style="color: #f28b88;">✖︎</span></p></button>
+            </form>
+          </div>
+          {% endif %}
+          <br>
+          <span style="font-weight: 500; white-space: pre-wrap";>{{ item['desc'] }}</span>
+          <hr>
+          <h5 style="letter-spacing: 0.1em; font-weight: 500;">Details</h3>
+          <div class="ps-3" style="font-weight: 400;">
+            <strong style="font-weight: 600;">Condition: </strong>{{ item['condition']}}<br>
+            <strong style="font-weight: 600;">Type:   </strong>{{item['type']}}<br>
+            <strong style="font-weight: 600;">Subtype:   </strong>{{ item['subtype']}}<br>
+            <strong style="font-weight: 600;">Clothing Gender: </strong>{{item['gender'] }}<br>
+            <strong style="font-weight: 600;">Color: </strong>{{ item['color']}}<br>
+            <strong style="font-weight: 600;">Seller NetId: </strong>{{ item['sellernetid'] }}<br>
+            {% if item['status'] == 1 and user_info['netid'] == item['sellernetid'] %}
+            <strong style="font-weight: 600;">Buyer NetId: </strong>{{ item['buyernetid'] }}<br>
+            {% endif %}
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </body>
+
+<script>
+
+    function setup() {
+        $("#shop_form").hide();
+
+        if ("{{route}}" == "" || "{{route}}" == "None") {
+            $("#back_form").hide();
+        }
+        if ("{{route}}" == "/shop") {
+            $("#back_form").hide();
+            $("#shop_form").show();
+        }
+    }
+
+    $("#document").ready(setup);
+
+
+</script>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<link rel="shortcut icon" type="image/" href="/static/images/icon.png"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<html>
+    <head>
+        <title>TigerThrift</title>
+    </head>
+  <body>
+    <div id="main">
+    {% include 'header.html' %}
+    <h3 class="text-center mt-3"><strong>Browse Items</strong></h3>
+    <br>
+    <div class="px-3">
+        <div class="input-group rounded" id="searchbar">
+            <input type="search" id="search" class="form-control border-0 border-bottom border-dark border-2 rounded-0 text-center" 
+            style="border: 1px solid black; font-family:Arial, FontAwesome" placeholder="&#xF002; search by item name here" autofocus/>
+        </div>
+        <div class="d-flex mt-1 align-middle flex-wrap">
+            <!--filter dropdown-->
+            <div class="me-auto btn mt-0 p-0">
+                <button class="btn dropdown-toggle p-0" type="button" id="dropdownMenu"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    Filters
+                </button>
+                <ul class="dropdown-menu rounded-0 m-2" aria-labelledby="dropdownMenu" style="width: 85%;">
+                    <div class="row">
+                        <li>
+                            <div class="form-group p-2 float-start" style="max-width: 250px;">
+                                <label>Type</label>
+                                <select id="type_select" name ="type" class="form-control">
+                                    <option value="">choose a type of clothing</option>
+                                    <option value="top">Top</option>
+                                    <option value="bottom">Bottom</option>
+                                    <option value="dress">Dress</option>
+                                    <option value="outerwear">Outerwear</option>
+                                    <option value="shoes">Shoes</option>
+                                    <option value="accessories">Accessories</option>
+                                </select>
+                            </div>
+                            <div class="form-group p-2 float-start" style="min-width: 180px; max-width: 250px;">
+                                <label>Subtype</label>
+                                <select id="subtype_select" name = "subtype" class="form-control" disabled></select>
+                            </div>
+                            <div class="form-group p-2 float-start" style="min-width: 175px; max-width: 250px;">
+                                <label>Size</label>
+                                <select id="size_select" name = "size" class="form-control" disabled></select>
+                            </div>
+                            <div class="form-group p-2 float-start" style="min-width: 175px; max-width: 250px;">
+                                <label>Gender</label>
+                                <select id="gender_select" name = "gender" class="form-control">
+                                    <option selected value="">choose a gender</option>
+                                    <option value="mens">Mens</option>
+                                    <option value="womens">Womens</option>
+                                    <option value="unisex">Unisex</option>
+                                </select>
+                            </div>
+                            <div class="form-group p-2 float-start" style="min-width: 175px; max-width: 250px;">
+                                <label>Brand</label>
+                                <select id="brand_select" name = "brand" class="form-control">
+                                    <option selected value="">choose a brand</option>
+                                    {% for brand in brands %}
+                                    <option value="{{ brand }}">{{ brand }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group p-2 float-start" style="min-width: 175px; max-width: 250px;">
+                                <label>Condition</label>
+                                <select id = "condition_select" name="condition" class="form-control" >
+                                    <option value="">choose condition</option>
+                                    <option value="brand new">Brand New</option>
+                                    <option value="like new">Like New</option>
+                                    <option value="gently used">Gently Used</option>
+                                    <option value="fairly used">Fairly Used</option>
+                                    <option value="very used">Very Used</option>
+                                </select>
+                            </div>
+                            <div class="form-group p-2 float-start" style="min-width: 175px; max-width: 250px;">
+                                <label>Color</label>
+                                <select id = "color_select" name = "color" class="form-control" required>
+                                    <option value="">choose color</option>
+                                    <option value="red">Red</option>
+                                    <option value="pink">Pink</option>
+                                    <option value="orange">Orange</option>
+                                    <option value="yellow">Yellow</option>
+                                    <option value="green">Green</option>
+                                    <option value="blue">Blue</option>
+                                    <option value="purple">Purple</option>
+                                    <option value="brown">Brown</option>
+                                    <option value="black">Black</option>
+                                    <option value="white">White</option>
+                                    <option value="silver">Silver</option>
+                                    <option value="gold">Gold</option>
+                                    <option value="multicolored">Multi-colored</option>
+                                </select>
+                            </div>
+                        </li>
+                    </div>
+                    <div class="row">
+                        <button id="apply_button" class="col btn form-group m-2 float-start"
+                        type="button" style="max-width: 140px;">
+                            <a style="color: #2B6FF4;">apply filters</a>
+                        </button>
+                        <button id="clear_button" class="col btn form-group p-2 float-start" type="button" style="max-width: 100px;">
+                            <a>✖︎ clear</a>
+                        </button>
+                    </div>
+                </ul>
+            </div>
+            <div class="d-flex flex-wrap p-0" style="min-width: 200px;">
+                <span class="col align-middle btn p-0 pe-1">Sort By:</span>
+                <select class="form-select form-select-sm col pt-0 pb-0" 
+                    id="sort_select" name="type" style="width: 165px">
+                    <option value="newest to oldest">Newest to Oldest</option>
+                    <option value="oldest to newest">Oldest to Newest</option>
+                    <option value="price low to high">Price Low to High</option>
+                    <option value="price high to low">Price High to Low</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <br>
+    <span id="loadingmessage"></span>
+    <div class="container-fluid">
+    {% include 'searchresults.html' %}
+</div>
+</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+
+    <script>
+        document.getElementById("shop_header").style.color = "#2B6FF4";
+        document.getElementById("sell_header").style.color = "#000000";
+        document.getElementById("profile_header").style.color = "#000000";
+        document.getElementById("about_header").style.color = "#000000";
+        document.getElementById("tutorial_header").style.color = "#000000";
+
+        function handleResponse(response)
+        {
+            $("#loadingmessage").html("");
+            $('#search_results').html(response);
+        }
+
+        let request = null;
+        
+        function getResults(){
+
+            $("#loadingmessage").html('<h5 id="loadingmessage" class="text-center pb-5">Loading...</h5>');
+            $('#search_results').html('');
+
+            let search = $('#search').val();
+            let type = $('#type_select').val();
+            let subtype = $('#subtype_select').val();
+            let size = $('#size_select').val();
+            let gender = $('#gender_select').val();
+            let brand = $('#brand_select').val();
+            let condition = $('#condition_select').val();
+            let color = $('#color_select').val();
+            let sort = $('#sort_select').val();
+
+            if (search == null)
+                search = '';
+            if (type == null)
+                type = '';
+            if (subtype == null)
+                subtype = '';
+            if (size == null)
+                size = '';
+            if (brand == null)
+                brand = '';
+            if (condition == null)
+                condition = '';
+            if (color == null)
+                color = '';
+            if (gender == null)
+                gender = '';
+            if (sort == null)
+                sort = '';
+
+            search = encodeURIComponent(search);                
+            type = encodeURIComponent(type);
+            subtype = encodeURIComponent(subtype);
+            size = encodeURIComponent(size);
+            gender = encodeURIComponent(gender);
+            brand = encodeURIComponent(brand);
+            condition = encodeURIComponent(condition);
+            color = encodeURIComponent(color);
+            sort = encodeURIComponent(sort);
+
+            let url = '/searchresults?search=' + search + "&type=" + type + "&subtype=" + subtype + "&size=" + size + "&gender=" + gender + "&brand=" + brand + "&condition=" + condition + "&color=" + color + "&sort=" + sort;
+
+            if (request != null)
+                request.abort();
+
+            request = $.ajax({type: 'GET', url: url, success: handleResponse});
+        }
+
+        function setup(){
+
+            if ("{{prev_search}}" != "None") {
+                $("#search").val("{{prev_search}}");
+            }
+            if ("{{prev_filter['gender']}}" != "None") {
+                $('#gender_select').val("{{prev_filter['gender']}}");
+            }
+            if ("{{prev_filter['subtype']}}" != "None") {
+                $('#subtype_select').val("{{prev_filter['subtype']}}");
+            } 
+            if ("{{prev_filter['type']}}" != "None") {
+                $('#type_select').val("{{prev_filter['type']}}");
+            }
+            if ("{{prev_filter['size']}}" != "None") {
+                $('#size_select').val("{{prev_filter['size']}}");
+            }
+            if ("{{prev_filter['brand']}}" != "None") {
+                $('#brand_select').val("{{prev_filter['brand']}}");
+            }
+            if ("{{prev_filter['condition']}}" != "None") {
+                $('#condition_select').val("{{prev_filter['condition']}}");
+            }
+            if ("{{prev_filter['color']}}" != "None") {
+                $('#color_select').val("{{prev_filter['color']}}");
+            }
+            if ("{{prev_search}}" != "None") {
+                console.log('previous search: ' + '{{prev_search}}')
+                console.log('decoded previous search: ' + decodeURIComponent('{{prev_search}}'))
+                $("#search").val(decodeURIComponent("{{prev_search}}"));
+            }
+            if ("{{prev_sort}}" != "None") {
+                $("#sort_select").val("{{prev_sort}}");
+            }
+
+            $('#search_button').click(getResults);
+            $('#apply_button').click(getResults);
+
+            $('#clear_button').click(function() {
+                $("#type_select").val('');
+                $("#subtype_select").empty();
+                $('#subtype_select').attr("disabled", true);
+                $("#size_select").empty();
+                $('#size_select').attr("disabled", true);
+                $("#condition_select").val('');
+                $("#brand_select").val('');
+                $('#color_select').val('');
+                $('#gender_select').val('');
+
+                getResults();
+            });
+
+
+            $("#sort_select").change(function(){
+                $('#sort_menu').text($("#sort_select").val());
+                getResults();
+            });
+
+            $("#search").on('input', function (e) {
+                getResults();
+            });
+
+            $("#search").on('keyup', function (e) {
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    getResults();
+                }
+            });
+
+            $("#type_select").change(function(){
+                let selected = $("#type_select").val();
+                let subtypes = [];
+                let sizes = [];
+
+                console.log("selected: " + selected);
+
+                if (selected == "top") {
+                    subtypes.push("T-shirt", "Bodysuit", "Tanks",  "Shirt", "Blouse", "Blazer", "Sweater");
+                    sizes.push("XXS (W)", "XS (W)", "S (W)", "M (W)", "L (W)", "XL (W)", "XXL (W)","XS (M)", "S (M)", "M (M)", "L (M)", "XL (M)", "XXL (M)");
+                }
+
+                if (selected == "bottom") {
+                    subtypes.push("Pants", "Skirt", "Shorts", "Jeans");
+                    sizes.push("XXS (W)", "XS (W)", "S (W)", "M (W)", "L (W)", "XL (W)", "XXL (W)", "XS (M)", "S (M)", "M (M)", "L (M)", "XL (M)", "XXL (M)", "24”", "25”", "26”", "27”", "28”", "29”", "30”", "31”", "32”", "33”", "34”", "35”", "36”", "37”", "38”", "39”", "40”", "41”", "42”", "43”", "44”", "45”", "46”","00", "0", "2", "4", "6", "8", "10", "12", "14", "16", "18");
+                }
+
+                if (selected == "dress") {
+                    subtypes.push("Casual", "Semi-Formal", "Formal");
+                    sizes.push("XXS (W)", "XS (W)", "S (W)", "M (W)", "L (W)", "XL (W)", "XXL (W)", "00", "0", "2", "4", "6", "8", "10", "12", "14", "16", "18");
+                }
+
+                if (selected == "outerwear") {
+                    subtypes.push("Coat", "Jacket", "Cardigan", "Crewneck", "Hoodie");
+                    sizes.push("XXS (W)", "XS (W)", "S (W)", "M (W)", "L (W)", "XL (W)", "XXL (W)", "XS (M)", "S (M)", "M (M)", "L (M)", "XL (M)", "XXL (M)");
+                }
+
+                if (selected == "shoes") {
+                    subtypes.push("Sneakers", "Sandals", "Boots", "Heels/Dress Shoes");
+                    sizes.push("5W", "5.5W", "6W", "6.5W", "7W", "7.5W", "8W", "8.5W", "9W", "9.5W", "10W", "10.5W", "11W", "11.5W", "12W", "12.5W", "13W",
+                        "7M", "7.5M", "8M", "8.5M", "9M", "9.5M", "10M", "10.5M", "11M", "11.5M", "12M", "12.5M", "13M", "13.5M", "14M");
+                }
+
+                if (selected == "accessories") {
+                    subtypes.push("Hat", "Jewelry", "Watch", "Sunglasses", "Scarf", "Gloves", "Belt", "Bag", "Tie");
+                    sizes.push("One-size");
+                } 
+
+                $("#subtype_select").empty();
+                $("#size_select").empty();
+
+                if (selected == "") {
+                    $('#subtype_select').attr("disabled", true);
+                    $('#size_select').attr("disabled", true);
+                }
+                else {
+                    $('#subtype_select').attr("disabled", false);
+                    $('#size_select').attr("disabled", false);
+
+                    $('#size_select').append($('<option>', {
+                    value: "",
+                    text: "choose a size"
+                }));
+
+                $('#subtype_select').append($('<option>', {
+                    value: "",
+                    text: "choose a subtype"
+                }));
+                
+                for (i in subtypes) {
+                    $('#subtype_select').append($('<option>', {
+                        value: subtypes[i].toLowerCase(),
+                        text: subtypes[i]
+                    }));
+                }
+
+                for (j in sizes) {
+                    $('#size_select').append($('<option>', {
+                        value: sizes[j].toLowerCase(),
+                        text: sizes[j]
+                    }));
+                }
+                }
+            });
+        }
+
+        $('#document').ready(setup);
+
+        // reload if back button hit
+        window.onpageshow = function(event) {
+		if (event.persisted) {
+			window.location.reload();
+		}
+	};
+
+    </script>
+  </body>
+</html>

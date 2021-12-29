@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<link rel="shortcut icon" type="image/" href="/static/images/icon.png"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<html>
+    <head>
+        <title>TigerThrift</title>
+    </head>
+  <body>
+    {% include 'header.html' %}
+    <br>
+    <div class="justify-content-center">
+        <h2 class="text-center mt-3"><strong>Oh no! An error occured.</strong></h2>
+        <br>
+        <p class="text-center"><strong>{{message}}</strong></p>
+        <div class="text-center">
+          <form method="get" action="/shop">
+            <button type="submit" class="btn btn-dark">browse items</button>
+          </form>
+        </div>
+        <div class="text-center mt-3" style="padding-bottom: 50px;">
+          <a class="btn btn-dark" href="mailto: tigerthrift@princeton.edu" role="button" style="letter-spacing: 0.1em;">
+            contact us <i class="fa fa-envelope"></i></a>
+        </div>
+    </div>
+  </body>
+</html>

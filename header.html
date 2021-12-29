@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-md navbar-light pb-0 pt-3" id="logged_in_navbar">
+  <div class="container-fluid" id="style_header">
+    <div class="d-flex flex-wrap p-0">
+      <a href="/" style="text-decoration:none; color: black;"><h1><strong>TigerThrift</strong></h1></a>
+      <a href="/"><img src="/static/images/icon.png" class="img-fluid align-middle ps-2"
+        style="max-height: 38px; max-width: 38px;"></a>
+    </div>   
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" href="/shop" id="shop_header">Shop</a>
+        <a class="nav-item nav-link" href="/sell" id="sell_header">Sell</a>
+        <a class="nav-item nav-link" href="/about" id="about_header">About</a>
+        <a class="nav-item nav-link" href="/tutorial" id="tutorial_header">Tutorial</a>
+        <div class="dropdown">
+          <a class="nav-item nav-link dropdown-toggle" href="/profile"
+            role="button" id="profile_header" data-bs-toggle="dropdown" aria-expanded="false">
+            My Account
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <a class="dropdown-item" href="/profile">My Profile</a>
+            <a class="dropdown-item" href="/myreserved">My Reservations</a>
+            <a class="dropdown-item" href="/mypurchased">My Purchases</a>
+            <a class="dropdown-item" href="/myselling/reserved">My Selling</a>
+            <a class="dropdown-item" href="/mysold">My Sold</a>
+            <a class="dropdown-item" href="/logout">Log Out</a>
+          </ul>
+        </div>
+      </div>
+    </div>
+</nav>

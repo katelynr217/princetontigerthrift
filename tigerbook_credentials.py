@@ -1,0 +1,2 @@
+USERNAME="katelynr"
+API_KEY="9f4ff94ba26dbb131f01576e4491d526"

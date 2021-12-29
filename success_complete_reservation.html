@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<link rel="shortcut icon" type="image/" href="/static/images/icon.png"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<html>
+    <head>
+        <title>TigerThrift</title>
+    </head>
+  <body>
+    {% include 'header.html' %}
+    <div class="container-fluid">
+        <h3 class="text-center pt-5"><strong>You have successfully fulfilled {{buyer_full_name}}'s reservation!</strong></h3>
+        <p class="text-center pt-2">Thank you for selling your item on TigerThrift!</p>
+        <p class="text-center pt-2">Now it's your turn to browse items, or you can go to your profile to see it listed under past items you have sold!</p>
+        <br><br>
+        <div class="d-flex justify-content-center pt-3">
+          <form method="get" action="/shop" class="pe-5">
+            <button type="submit" class="btn btn-dark">browse items</button>
+          </form>
+          <form method="get" action="/mysold">
+            <button type="submit" class="btn btn-dark">view items you have sold</button>
+          </form>
+        </div>
+    </div>
+  </body>
+</html>

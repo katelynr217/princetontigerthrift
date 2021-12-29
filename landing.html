@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<link rel="shortcut icon" type="image/" href="/static/images/icon.png"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<html>
+    <head>
+        <title>TigerThrift</title>
+    </head>
+  <body>
+    <!--header-->
+    <nav class="navbar navbar-expand-sm navbar-light bg-white pb-0 pt-3">
+      <div class="container-fluid" id="style_header">
+        <div class="d-flex flex-wrap p-0">
+          <a href="/" style="text-decoration:none; color: black;"><h1><strong>TigerThrift</strong></h1></a>
+          <a href="/"><img src="/static/images/icon.png" class="img-fluid align-middle ps-2"
+            style="max-height: 38px; max-width: 38px;"></a>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <div class="navbar-nav">
+            <h5><a class="nav-item nav-link" href="about">About</a></h5>
+            <h5><a class="nav-item nav-link" href="tutorial">Tutorial</a></h5>
+            <h5><a class="nav-item nav-link link-secondary" href="login">Log In</a></h5>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!--after header-->
+    <div class="container-fluid">
+        <span class="d-flex justify-content-center">
+          <img src="/static/images/logo.png" class="img-fluid text-center pt-3 ps-2 w-75"></img>
+        </span>
+        
+        <br>
+        <h2 class="text-center m-auto p-2 pb-5" style="max-width: 750px;line-height: 180%;">
+          A platform to help Princeton undergraduate students buy and sell clothing.</h2>
+        <div class="text-center">
+          <form action="login" method='GET'>
+            <button class="btn-lg btn-dark px-5 pt-3 pb-3" id="loginButton">Log In to Start Shopping!</button>
+          </form>
+          <p class="p-2"><i>*you must be an undergraduate student to log in*</i></p>
+        </div>
+    </div>
+  </body>
+</html>

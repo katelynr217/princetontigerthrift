@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<link rel="shortcut icon" type="image/" href="/static/images/icon.png"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<html>
+  <head>
+      <title>TigerThrift</title>
+  </head>
+  <body>
+    <!--header-->
+    <nav class="navbar navbar-expand-sm navbar-light bg-white pb-0 pt-3" id="logged_out_navbar">
+      <div class="container-fluid" id="style_header">
+        <div class="d-flex flex-wrap p-0">
+          <a href="/" style="text-decoration:none; color: black;"><h1><strong>TigerThrift</strong></h1></a>
+          <a href="/"><img src="/static/images/icon.png" class="img-fluid align-middle ps-2"
+            style="max-height: 38px; max-width: 38px;"></a>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <div class="navbar-nav">
+            <h5><a class="nav-item nav-link" href="about">About</a></h5>
+            <h5><a class="nav-item nav-link" href="tutorial">Tutorial</a></h5>
+            <h5><a class="nav-item nav-link link-secondary" href="login">Log In</a></h5>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!--after header-->
+    {% include 'header.html' %}
+    <br>
+    <h3 class="text-center pb-3 mt-3"><strong><i>Sustainable Fashion for Princeton Students</i></strong></h3>
+        <!-- description of tigerthrift -->
+        <div style="max-width: 750px; padding-left: min(50px, 10%); padding-right: min(50px, 10%);"
+          class="m-auto">
+          <h4 style="font-weight: 300;" class="text-center">
+            TigerThrift is a web-based platform that facilitates buying and selling clothing and promotes sustainability within the Princeton undergraduate community.
+          </h4>
+          <br>
+          <p>
+            Noticing the cluttered and decentralized methods students currently use to sell clothing on campus, TigerThrift 
+            centralizes and streamlines the clothing thrifting process within a private and reliable community of Prineton University undergraduates. 
+            Accessible to all students via a secure, user-friendly web-app, we employ a simple yet flexible process to sell and buy items as well as to 
+            complete transactions. Students can sell clothing on the <a href="sell">sell page</a> and browse/reserve items 
+            on the <a href="shop">shop page</a>.
+          </p>
+
+          <div class="text-center">
+            <form action="tutorial" method='GET'>
+                <button class="card-text btn btn-dark" style="letter-spacing: 0.1em;">Click here for a Tutorial</button>
+            </form>
+          </div>
+          <!-- team -->
+          <h4 class="text-center pt-5">Team</h4>
+          <p class="text-center">Katelyn Rodrigues '23 and Brooke Gallagher '22</p>
+          <div class="text-center" style="padding-bottom: 50px;">
+            <a class="btn btn-dark" href="mailto: tigerthrift@princeton.edu" role="button" style="letter-spacing: 0.1em;">
+              Contact Us <i class="fa fa-envelope"></i></a>
+          </div>
+          <div class="text-center">
+            Fill out this <a href="https://forms.gle/kdr85jUN6b7SLsHS6">anonymous form</a> to provide feedback!
+          </div>
+        </div>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    document.getElementById("shop_header").style.color = "#000000";
+    document.getElementById("sell_header").style.color = "#000000";
+    document.getElementById("profile_header").style.color = "#000000";
+    document.getElementById("about_header").style.color = "#2B6FF4";
+    document.getElementById("tutorial_header").style.color = "#000000";
+    function setup(){
+      if ("{{logged_in}}" == "False") {
+        $("#logged_out_navbar").show();
+        $("#logged_in_navbar").hide();
+      }
+      else {
+        $("#logged_out_navbar").hide();
+        $("#logged_in_navbar").show();
+      }
+    }
+    
+    $('#document').ready(setup);
+  </script>
+</html>

@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body{
+    font-family: 'Work Sans', sans-serif;
+/*    min-height:100vh;*/
+    position: relative;
+    box-sizing: border-box;
+    margin-left:0px;
+    margin-right:0px;
+}
+
+#navbarNav a{
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: black;
+    margin-left:0px;
+    margin-right:0px;
+}
+
+#navbarNav a:hover{
+    color: #2B6FF4;
+}
+#navbarNav .dropdown-menu a:active{
+    color: #2B6FF4;
+    background-color: lightgray;
+}
+
+
+#navbarNav .dropdown-item{
+    font-size: 15px;
+}
+
+#sidebar a{
+    text-decoration: none;
+}
+
+#apply_button a:hover{
+    color: #2B6FF4;
+}
+#clear_button a:hover{
+    color: #2B6FF4;
+}
+
+#sidebar a:hover{
+    color: #2B6FF4;
+    cursor: pointer;
+}
+
+#card {
+    border-color: black;
+}
+
+#time_left{
+    color: red;
+}
+
+.input:focus {
+    outline: none !important;
+    border:1px solid red;
+    box-shadow: 0 0 10px #719ECE;
+}
+
+h1{
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 200;
+}
+
+h2{
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+}
+
+h3{
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 200;
+}
+
+h4{
+    font-family: 'Work Sans', sans-serif;
+}
+
+h5{
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 300;
+}
+
+textarea:active, 
+textarea:focus,
+textarea:hover, 
+label:focus,
+input:hover, 
+input:active, 
+input:focus,
+button:focus,
+button:active,
+button:hover,
+select:focus,
+select:active,
+.btn:focus,
+.btn:active {
+    outline: none !important;
+    -webkit-appearance:none;
+    box-shadow: none !important;
+ }
+
+#loginButton{
+    color: white;
+    border: none;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+}
+
+#loginButton:hover{
+    background-color: #ffa64d;
+    outline-color: black;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    color: #ffffff;
+    transform: translateY(-10px);
+}
+
+#back_form button:hover{
+    color:#2B6FF4;
+    border-bottom:1px solid #2B6FF4;
+}
+
+
+#shop_form button:hover{
+    color:#2B6FF4;
+    border-bottom:1px solid #2B6FF4;
+}
+
+#back_button button:hover{
+    color:#2B6FF4;
+    border-bottom:1px solid #2B6FF4;
+}
+
+
+#searchbar ::placeholder{
+    color: rgba(43, 111, 244, 0.75);
+    font-weight: 500;
+}
+  
+#searchbar :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: rgba(43, 111, 244, 0.75);
+    font-weight: 500;
+}
+  
+#searchbar ::-ms-input-placeholder { /* Microsoft Edge */
+    color: rgba(43, 111, 244, 0.75);
+    font-weight: 500;
+}
+
+
+/*#footer{
+    position: absolute;
+    bottom: 0;
+    height: 5rem;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+    box-sizing: border-box;
+    overflow-wrap: break-word; 
+    display: block;
+    margin-left:0px;
+    margin-right:0px;
+
+}*/
