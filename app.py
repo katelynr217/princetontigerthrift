@@ -149,7 +149,7 @@ def is_authenticated():
 def shop():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
     if user_info == "not an undergrad":
         html = render_template('error.html', message="Error. You are not an undergrad. You are not allowed to access this site.")
@@ -235,7 +235,7 @@ def shop():
 def sell():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
     if user_info is None:
         print("can't get user_info for netid: " + str(username))
@@ -251,7 +251,7 @@ def sell():
 def edit_item():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
     itemid = request.form.get('itemid')
     route = request.cookies.get('route')
@@ -280,7 +280,7 @@ def edit_item():
 def success_edit():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
 
     itemid = request.form.get('itemid')
@@ -345,7 +345,7 @@ def success_edit():
 def success_sell():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
 
     prodname = request.form.get('prodname')
@@ -411,7 +411,7 @@ def success_sell():
 def search_results():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
 
     search = request.args.get('search')
@@ -464,7 +464,7 @@ def search_results():
 def reserve():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
     buyer = {'first_name': user_info['first_name'], 'netid': user_info['netid'], 'email': user_info['email'], 'full_name': user_info['full_name'], 'phone': user_info['phone']} # add full name 
 
@@ -533,7 +533,7 @@ def reserve():
 def cancel_reservation():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
     buyer = {'first_name': user_info['first_name'], 'full_name': user_info['full_name'], 'email': user_info['email']}
     itemid = request.form.get('itemid')
@@ -573,7 +573,7 @@ def cancel_reservation():
 def complete_reservation():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
 
     itemid = request.form.get('itemid')
@@ -606,7 +606,7 @@ def complete_reservation():
 def delete_item():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
 
     itemid = request.form.get('itemid')
@@ -647,7 +647,7 @@ def delete_item():
 def profile():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
 
     user_info = get_user_info(username)
 
@@ -664,7 +664,7 @@ def profile():
 def my_purchased():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
 
     purchased_items = past_purchases(user_info)
@@ -690,7 +690,7 @@ def my_purchased():
 def my_reserved():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
 
     curr_reserved_items = reserved_items(user_info)
@@ -716,7 +716,7 @@ def my_reserved():
 def my_selling_active():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
 
     active_items = curr_active_items(user_info)
@@ -744,7 +744,7 @@ def my_selling_active():
 def my_selling_reserved():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
 
     reserved_by_others = seller_reservations(user_info)
@@ -771,7 +771,7 @@ def my_selling_reserved():
 def my_sold():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
 
     past_sold_items = items_sold_in_past(user_info)
@@ -797,7 +797,7 @@ def my_sold():
 def itemdetails():
     # is_authenticated()
     # username = CasClient().authenticate()
-    username = 'katelynr'
+    username = 'krodrigues'
     user_info = get_user_info(username)
 
     itemid = request.args.get('itemid')
