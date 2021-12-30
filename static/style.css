@@ -154,17 +154,11 @@ select:active,
 }
 
 
-/*#footer{
-    position: absolute;
-    bottom: 0;
-    height: 5rem;
-    right: 0;
-    left: 0;
-    z-index: 1030;
-    box-sizing: border-box;
-    overflow-wrap: break-word; 
+#footer{
+    bottom: 0px;
     display: block;
-    margin-left:0px;
-    margin-right:0px;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
 
-}*/
+}
