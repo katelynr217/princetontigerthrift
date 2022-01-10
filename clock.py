@@ -53,7 +53,7 @@ def days_between(d1, d2, seller, buyer, item_name):
 # iterates through each item in reservations table 
 # to send reservation expiration reminder emails to item buyer and seller if necessary
 # return true if job was successful, or return false if unsuccesful
-@sched.scheduled_job('cron', day_of_week='0-6', hour=21) 
+@sched.scheduled_job('cron', day_of_week='0-6', hour=5) 
 def scheduled_job():
     print('This job is run every day at 4pm EST.')
     DATABASE_URL = os.environ.get('DATABASE_URL')
